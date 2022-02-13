@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/demoserver1214/databases/mysqlserverdb",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:SampleDbConnection",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
