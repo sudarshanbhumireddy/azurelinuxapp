@@ -71,7 +71,8 @@ namespace azurelinuxapp.Controllers
         {
             var dbbook = _context.Books.Find(id);
             _context.Books.Remove(dbbook);
-            return View("Index");
+            _context.SaveChanges();
+            return View("Index",_context.Books.ToList());
         }
     }
 }
