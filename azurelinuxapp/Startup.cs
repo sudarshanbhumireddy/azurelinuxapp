@@ -37,11 +37,12 @@ namespace azurelinuxapp
         {
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error/Error");
+                app.UseStatusCodePagesWithReExecute("/Error/HttpStatusCodeHandler/{0}");
             }
 
             app.UseStaticFiles();

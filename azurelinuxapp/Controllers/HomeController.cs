@@ -21,16 +21,57 @@ namespace azurelinuxapp.Controllers
 
             return View(_context.Books.ToList());
         }
-        public ActionResult Test()
+        [HttpGet]
+        public ActionResult Create()
         {
-
             return View();
         }
-
-        public string Sample()
+        [HttpPost]
+        public ActionResult Create(Book book)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Books.Add(book);
+                _context.SaveChanges();
+                return View("Index", _context.Books.ToList());
+            }
+            return View();
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            return View(_context.Books.Find(id));
+        }
+        [HttpPost]
+        public ActionResult Edit(Book book)
+        {
+            if (ModelState.IsValid)
+            {
+                var dbbook = _context.Books.FirstOrDefault(x => x.Id == book.Id);
+                dbbook.Name = book.Name;
+                dbbook.cost = book.cost;
+                dbbook.description = book.description;
+                _context.Books.Update(dbbook);
+                _context.SaveChanges();
+                return View("Index",_context.Books.ToList());
+            }
+            return View();
+        }
+        [HttpGet]
+        [ActionName("Delete")]
+        public ActionResult Delete_Get(int id)
         {
 
-            return "Sample code";
+            var dbbook = _context.Books.Find(id);
+            return View(dbbook);
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult Delete_Post(int id)
+        {
+            var dbbook = _context.Books.Find(id);
+            _context.Books.Remove(dbbook);
+            return View("Index");
         }
     }
 }
