@@ -28,7 +28,7 @@ namespace azurelinuxapp
             services.AddMvc(options=>options.EnableEndpointRouting=false);
             services.AddDbContextPool<AppDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("SampleDbConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("MyAzureSqlConnection"));
             });
         }
 
@@ -45,16 +45,13 @@ namespace azurelinuxapp
                 app.UseStatusCodePagesWithReExecute("/Error/HttpStatusCodeHandler/{0}");
             }
 
+            //  app.UseAuthorization();
             app.UseStaticFiles();
 
             app.UseRouting();
-
-          //  app.UseAuthorization();
-            app.UseMvcWithDefaultRoute();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
+            app.UseMvc(routes =>
+            routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}")
+            );
         }
     }
 }
